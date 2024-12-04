@@ -15,6 +15,8 @@ files:
 extraFiles:
   - from: "modules"
     to: "modules"
+  - from: "daemon"
+    to: "daemon"
 asarUnpack:
   - resources/**
 win:
