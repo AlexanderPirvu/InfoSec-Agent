@@ -1,10 +1,23 @@
-import { app, utilityProcess } from "electron";
+import { app } from "electron";
 import * as fs from "fs";
 import path from "path";
 import YAML from "yaml";
 import { agentModule } from "./interfaces/moduleInterface";
-import { spawn } from "child_process";
+import { debugLog } from "./helpers";
 
+// **NOTE**: This file is a work in progress and is not yet implemented in the main process
+
+/*
+ *  This file is intended to be used to run modules in the main process of the application. 
+ *  It reads the modules directory and runs each module in a separate process.
+ * 
+ *  The modules are expected to be in the following format:
+ *  - resources/modules
+ *   - module_name
+ *    - config.yml
+ *    - module1(.exe/.sh/.ps/.py)
+ * 
+ */
 
 const os = require('os')
 
@@ -24,35 +37,52 @@ export function getModuleFolders(): string[] {
 
         return moduleFolders
     } catch (error) {
-        console.error(`Error occurred while reading modules: ${error.message}`)
+        if (error instanceof Error) {
+            console.error(`Error occurred while reading modules: ${error.message}`)
+        } else {
+            console.error('An unknown error occurred while reading modules')
+        }
         return []
     }
 }
-
-export function getModuleInfo(modulePath: string) : agentModule {
+export function getModuleInfo(modulePath: string): agentModule | undefined {
     try {
         const configPath = path.join(modulePath, "config.yml")
 
-        const fileContents = fs.readFileSync(configPath, 'utf-8')
+        let fileContents
 
-        const configData = YAML.parse(fileContents)
+        // FS Read config.yml file
+        try {
+            fileContents = fs.readFileSync(configPath, 'utf-8')
+        } catch (error) {
+            throw new Error(`Error reading ${modulePath}'s config.yml file: ${error}`)
+        }
+
+        let configData
+
+        // Parse YAML file
+        try {
+            configData = YAML.parse(fileContents)
+        } catch (parseError) {
+            throw new Error(`Error parsing ${modulePath}'s config.yml file: ${parseError}`)
+        }
 
         return configData
     } catch (error) {
         console.error(`Error reading ${modulePath}'s config.yml file. Are you sure it exists?`)
     }
+    return undefined
 }
 
 export function runModules() {
     try {
         const modulesDirectory = path.join(app.getAppPath(), 'resources',  'modules')
 
-        console.log(modulesDirectory)
+        debugLog(`Running modules from ${modulesDirectory}`)
 
         const modules = getModuleFolders()
 
-        console.log("HERE")
-        console.log(modules)
+        debugLog(`Found modules: ${modules}`)
 
         // Basic checking of modules folder
         // TODO: If modules do not exist, download them from a repo
@@ -61,12 +91,27 @@ export function runModules() {
         }
 
         modules.forEach(module => {
+            // Get module info (config.yml)
             const moduleInfo = getModuleInfo(path.join(modulesDirectory, module))
 
-            console.log(module)
 
-            console.log(moduleInfo)
+            // If moduleInfo is undefined (no config.yml present), skip the module
+            if (!moduleInfo) {
+                console.error(`Error reading module ${module}'s config.yml file. Skipping module.`)
+                return
+            }
+
+
+            // Check if module supports current OS 
+            if ((isMac && !moduleInfo.os.find((os) => os === 'mac')) || (isWindows && !moduleInfo.os.find((os) => os === 'windows')) || (isLinux && moduleInfo.os.find((os) => os === 'linux'))) {
+                console.error(`Cannot run module ${moduleInfo.name}: OS not supported. Supported OS: ${moduleInfo.os}`)
+                return
+            } else {
+                console.log(`Running module ${moduleInfo.name}: OS supported.`)
+            }
             
+
+            // Check if module requires elevated permissions
             if (moduleInfo.isSudo) {
                 // TODO: Communicate with Priviledged Service to execute module with elevated permissions
                 console.error(`Cannot run module ${moduleInfo.name}: Priviledge escalation required, but not implemented.`)
