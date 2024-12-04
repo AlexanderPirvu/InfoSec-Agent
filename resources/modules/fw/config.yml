@@ -1,0 +1,9 @@
+name: "Firewall Security"
+desc: "Checking UFW configuration"
+version: 0.0.1
+os:
+  - linux
+isSudo: true
+exec: firewall_security
+args:
+  - ""

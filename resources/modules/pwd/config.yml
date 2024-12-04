@@ -1,0 +1,11 @@
+name: "Password Security"
+desc: "Checking password complexity"
+version: 0.0.1
+authors: 
+  - ""
+os:
+  - linux
+isSudo: false
+exec: password_scanner
+args:
+  - ""

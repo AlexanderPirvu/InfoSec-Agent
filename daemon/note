@@ -1,0 +1,5 @@
+systemctl enable infosec.service
+systemctl start infosec.service
+
+
+/usr/local/bin

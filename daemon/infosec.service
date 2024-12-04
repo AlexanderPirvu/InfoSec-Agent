@@ -1,0 +1,11 @@
+[Unit]
+Description=InfoSec Agen Privilege Escalation Service
+
+[Service]
+ExecStart=/home/ubuntu/Documents/daemon
+User=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
