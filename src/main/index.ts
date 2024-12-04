@@ -1,9 +1,10 @@
-import { app, shell, BrowserWindow, ipcMain, utilityProcess } from "electron";
-import path, { join } from "path";
+import { app, shell, BrowserWindow, ipcMain } from "electron";
+import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
-import { spawn } from "node:child_process";
-import { getModuleFolders, getModuleInfo, runModules } from "./services";
-import { platform } from "node:os";
+import { runModules } from "./services";
+// import { spawn } from "node:child_process";
+// import { getModuleFolders, getModuleInfo, runModules } from "./services";
+// import { platform } from "node:os";
 // import icon from "../assets/icon.png";
 
 function createWindow(): void {
@@ -78,6 +79,8 @@ app.whenReady().then(() => {
   ipcMain.on("runModule", (event, moduleName) => {
     // console.log(`Running module ${moduleName}`)
     try {
+
+      console.log(moduleName)
 
       runModules()
 

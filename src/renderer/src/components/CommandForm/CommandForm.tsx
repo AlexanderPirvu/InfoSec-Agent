@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { FormEvent, useState } from 'react'
 import * as Form from "@radix-ui/react-form"
 import { Badge, Button, Spinner, Text, TextField } from '@radix-ui/themes'
