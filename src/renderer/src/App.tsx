@@ -1,15 +1,12 @@
-import { Heading, Section } from "@radix-ui/themes"
+import { Section } from "@radix-ui/themes"
 import "@radix-ui/themes/styles.css"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
-import CommandForm from "./components/CommandForm/CommandForm"
-import RunModulesButton from "./components/RunModulesButton/RunModulesButton"
-
 import InfoSecAgentLogo from "./assets/InfoSec-Agent-logo.png"
 
 import '@mantine/core/styles.css'
 import { AppShell, Center, Image, MantineColorsTuple, MantineProvider, NavLink, Title } from "@mantine/core"
-import { CheckboxIcon, Cross2Icon, Crosshair2Icon, EyeOpenIcon, GearIcon, HomeIcon, InfoCircledIcon, Link2Icon, LockClosedIcon, MixIcon } from "@radix-ui/react-icons"
+import { CheckboxIcon, Crosshair2Icon, EyeOpenIcon, GearIcon, HomeIcon, InfoCircledIcon, Link2Icon, LockClosedIcon, MixIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
 import HomePage from "./pages/HomePage"
 import SettingsPage from "./pages/SettingsPage"

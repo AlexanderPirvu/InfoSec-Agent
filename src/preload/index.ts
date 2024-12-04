@@ -1,6 +1,5 @@
 import { contextBridge, ipcRenderer } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
-import { userInfo } from "os";
 
 // Custom APIs for renderer
 const WINDOW_API = {

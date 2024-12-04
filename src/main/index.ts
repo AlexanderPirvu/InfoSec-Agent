@@ -81,13 +81,14 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  ipcMain.handle("getUserInfo", (event) => { 
+  ipcMain.handle("getUserInfo", () => { 
     try {
       const userInfo = os.userInfo()
       const username = userInfo.username
       return username
     } catch (error) {
       console.error(`Error fetching user information: ${error}`)
+      return null
     }
   })
 
@@ -101,7 +102,6 @@ app.whenReady().then(() => {
 
       const modulesOutput = runModules()
       console.log(modulesOutput)
-      console.log(JSON.parse(modulesOutput))
       event.sender.send('moduleData', modulesOutput)
 
       // TODO: fix regex
