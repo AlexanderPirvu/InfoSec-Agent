@@ -3,8 +3,10 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"modules/output_module"
 	"os/exec"
 	"strings"
+	// "../output_module"
 )
 
 const (
@@ -40,7 +42,7 @@ func checkFirewallInstalled() bool {
 		status = "fail"
 		message = "UFW (Uncomplicated Firewall) is not installed"
 		fix = "sudo apt install ufw"
-		PrintOutput(NewMainOut(status, message, fix, modname))
+		output_module.PrintOutput(output_module.NewMainOut(status, message, fix, modname))
 		return false
 	}
 	return true
@@ -58,7 +60,7 @@ func checkFirewallEnabled() bool {
 		status = "fail"
 		message = "Firewall is not enabled"
 		fix = "use sudo ufw enable"
-		PrintOutput(NewMainOut(status, message, fix, modname))
+		output_module.PrintOutput(output_module.NewMainOut(status, message, fix, modname))
 		return false
 	}
 	//fmt.Println("Firewall is enabled.")
@@ -146,13 +148,13 @@ func printSummary() {
 		status = "success"
 		message = "No critical issues detected. Your firewall configuration looks good."
 		fix = ""
-		PrintOutput(NewMainOut(status, message, fix, modname))
+		output_module.PrintOutput(output_module.NewMainOut(status, message, fix, modname))
 	} else {
 
 		for i, warning := range warnings {
 			//fmt.Printf("- %s\n", warning)
 			status = "warn"
-			PrintOutput(NewMainOut(status, warning, suggestions[i], modname))
+			output_module.PrintOutput(output_module.NewMainOut(status, warning, suggestions[i], modname))
 		}
 		// fmt.Println("\nSuggestions:")
 		// for _, suggestion := range suggestions {

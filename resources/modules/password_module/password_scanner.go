@@ -3,10 +3,15 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"modules/output_module"
 	"os"
 	"strconv"
 	"strings"
 )
+
+var status string
+var fix string
+var modname string
 
 type PasswordPolicy struct {
 	MinLength        int
@@ -109,24 +114,30 @@ func evaluatePolicy(policy *PasswordPolicy) string {
 		policy.RequireDigit &&
 		policy.RequireSpecial &&
 		policy.MinDaysBetween >= 1 {
+		status = "success"
+		fix = ""
 		return "Password policy is strong."
 	}
+	status = "warning"
+	fix = "Improve password policy"
 	return "Password policy is weak."
 }
 
 func main() {
+	modname = "password_scanner"
 	policy := &PasswordPolicy{}
 
 	parseLoginDefs(policy)
 	parsePwQuality(policy)
 
-	fmt.Printf("Password Policy:\n")
-	fmt.Printf("Minimum Length: %d\n", policy.MinLength)
-	fmt.Printf("Minimum Days Between Password Changes: %d\n", policy.MinDaysBetween)
-	fmt.Printf("Require Uppercase: %v\n", policy.RequireUpperCase)
-	fmt.Printf("Require Lowercase: %v\n", policy.RequireLowerCase)
-	fmt.Printf("Require Digit: %v\n", policy.RequireDigit)
-	fmt.Printf("Require Special Character: %v\n", policy.RequireSpecial)
+	// fmt.Printf("Password Policy:\n")
+	// fmt.Printf("Minimum Length: %d\n", policy.MinLength)
+	// fmt.Printf("Minimum Days Between Password Changes: %d\n", policy.MinDaysBetween)
+	// fmt.Printf("Require Uppercase: %v\n", policy.RequireUpperCase)
+	// fmt.Printf("Require Lowercase: %v\n", policy.RequireLowerCase)
+	// fmt.Printf("Require Digit: %v\n", policy.RequireDigit)
+	// fmt.Printf("Require Special Character: %v\n", policy.RequireSpecial)
 
-	fmt.Println(evaluatePolicy(policy))
+	message := evaluatePolicy(policy)
+	output_module.PrintOutput(output_module.NewMainOut(status, message, fix, modname))
 }

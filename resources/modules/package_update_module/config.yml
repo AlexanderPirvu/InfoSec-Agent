@@ -1,0 +1,9 @@
+name: "Package Update"
+desc: "Checking for availbale package updates"
+version: 0.0.1
+os:
+  - linux
+isSudo: true
+exec: package_update
+args:
+  - ""

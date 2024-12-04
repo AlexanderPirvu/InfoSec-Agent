@@ -1,0 +1,9 @@
+name: "Group Permissions"
+desc: "Checking SUDO access permissions for existing user groups"
+version: 0.0.1
+os:
+  - linux
+isSudo: false
+exec: group_permissions
+args:
+  - ""

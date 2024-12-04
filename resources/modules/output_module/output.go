@@ -1,4 +1,4 @@
-package main
+package output_module
 
 import (
 	"encoding/json"
