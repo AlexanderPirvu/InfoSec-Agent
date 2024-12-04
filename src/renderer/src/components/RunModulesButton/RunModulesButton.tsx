@@ -2,14 +2,16 @@ import { Button } from '@radix-ui/themes/dist/cjs/components/button'
 import { useMutation } from '@tanstack/react-query'
 import React, { useState } from 'react'
 
-const RunModulesButton = () => {
+const RunModulesButton = ({setModuleInfo}) => {
   const [moduleOutput, setModuleOutput] = useState<string>('')
 
   const runModule = useMutation({
     mutationKey: ['modules'],
     mutationFn: async () => {
       window.api.onModuleOutput((output) => {
-        setModuleOutput(output)
+        // setModuleOutput(output)
+        console.log("Setting module info with " + output)
+        setModuleInfo(output)
       })
 
       await window.api.runModule('password_scanner')
@@ -24,7 +26,7 @@ const RunModulesButton = () => {
   return (
     <>
       <Button m='2' onClick={(e) => buttonClick(e)}>Run Modules</Button>
-      <div>{moduleOutput}</div>
+      {/* <div>{moduleOutput}</div> */}
     </>
   )
 }

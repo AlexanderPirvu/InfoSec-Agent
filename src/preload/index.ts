@@ -1,12 +1,14 @@
 import { contextBridge, ipcRenderer } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
+import { userInfo } from "os";
 
 // Custom APIs for renderer
 const WINDOW_API = {
   runModule: (moduleName: string) => ipcRenderer.send("runModule", moduleName),
   onModuleOutput: (callback) => ipcRenderer.on('moduleData', (_, data) => callback(data)),
-  onModuleError: (callback) => ipcRenderer.on('ModuleError', (_, error) => callback(error)),
-  onModuleClose: (callback) => ipcRenderer.on('ModuleClose', (_, message) => callback(message))
+  // onModuleError: (callback) => ipcRenderer.on('ModuleError', (_, error) => callback(error)),
+  // onModuleClose: (callback) => ipcRenderer.on('ModuleClose', (_, message) => callback(message)),
+  userInfo: () => ipcRenderer.invoke("getUserInfo"),
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

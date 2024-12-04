@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from "electron";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import { runModules } from "./services";
+import * as os from "os";
 // import { spawn } from "node:child_process";
 // import { getModuleFolders, getModuleInfo, runModules } from "./services";
 // import { platform } from "node:os";
@@ -15,9 +16,14 @@ function createWindow(): void {
     show: false,
     autoHideMenuBar: true,
     // ...(process.platform === "linux" ? { icon } : {}),
+    icon: join(__dirname, "../assets/icon.png"),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
       sandbox: false,
+      webSecurity: false,
+      nodeIntegration: true,
+      contextIsolation: false,
+      nodeIntegrationInWorker: true,
     },
   });
 
@@ -75,14 +81,28 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
+  ipcMain.handle("getUserInfo", (event) => { 
+    try {
+      const userInfo = os.userInfo()
+      const username = userInfo.username
+      return username
+    } catch (error) {
+      console.error(`Error fetching user information: ${error}`)
+    }
+  })
+
   // IPC Handlers
-  ipcMain.on("runModule", (event, moduleName) => {
+  ipcMain.on("runModule", async (event, moduleName) => {
     // console.log(`Running module ${moduleName}`)
     try {
 
+      console.log("fa")
       console.log(moduleName)
 
-      runModules()
+      const modulesOutput = runModules()
+      console.log(modulesOutput)
+      console.log(JSON.parse(modulesOutput))
+      event.sender.send('moduleData', modulesOutput)
 
       // TODO: fix regex
       // if (!/^[a-zA-Z0-9-_]+$/.test(moduleName)) {
