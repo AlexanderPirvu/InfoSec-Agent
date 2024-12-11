@@ -92,6 +92,9 @@ app.whenReady().then(() => {
     }
   })
 
+  // ipcMain.handle("sendNotification", (_, notification) => {
+
+
   // IPC Handlers
   ipcMain.on("runModule", async (event, moduleName) => {
     // console.log(`Running module ${moduleName}`)
