@@ -22,10 +22,10 @@ import { spawnSync } from "node:child_process";
 
 const os = require('os')
 
-const platform = os.platform()
-const isMac = platform === "darwin";
-const isWindows = platform === "win32";
-const isLinux = platform === "linux";
+const osType = os.type()
+const isMac = osType === "Darwin";
+const isWindows = osType === "Windows_NT";
+const isLinux = osType === "Linux";
 
 export function getModuleFolders(): string[] {
     try {
