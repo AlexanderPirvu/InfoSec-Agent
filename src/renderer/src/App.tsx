@@ -5,11 +5,13 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import InfoSecAgentLogo from "./assets/InfoSec-Agent-logo.png"
 
 import '@mantine/core/styles.css'
-import { AppShell, Center, Image, MantineColorsTuple, MantineProvider, NavLink, Title } from "@mantine/core"
+import { AppShell, Box, Center, Grid, GridCol, Image, MantineColorsTuple, MantineProvider, NavLink, Title } from "@mantine/core"
 import { CheckboxIcon, Crosshair2Icon, EyeOpenIcon, GearIcon, HomeIcon, InfoCircledIcon, Link2Icon, LockClosedIcon, MixIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
 import HomePage from "./pages/HomePage"
 import SettingsPage from "./pages/SettingsPage"
+import { NotificationProvider } from "./services/NotificationService"
+import NotificationDrawer from "./components/NotificationDrawer/NotificationDrawer"
 
 const queryClient = new QueryClient()
 
@@ -31,7 +33,6 @@ const mantineTheme = {
   colors: { themeColors },
   defaultRadius: 'lg',
 }
-
 
 function App(): JSX.Element {
   // const ipcHandle = (): void => window.Electron.ipcRenderer.send("ping");
@@ -57,6 +58,7 @@ function App(): JSX.Element {
   return (
     <>
     <MantineProvider theme={mantineTheme} forceColorScheme="dark">
+      <NotificationProvider>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
         <AppShell
@@ -68,10 +70,22 @@ function App(): JSX.Element {
           padding='md'
           >
             <AppShell.Header>
-              <Center>
-                <Image src={InfoSecAgentLogo} alt="InfoSec Agent" width={40} height={40} m={4}/>
-                <Title order={1} p={4}>InfoSec Agent</Title>
-              </Center>
+              <Grid columns={4}>
+                <GridCol span={1}>
+                  <Box m={10}>
+                    <NotificationDrawer />
+                  </Box>
+                </GridCol>
+                <GridCol span={2}>
+                  <Center>
+                    <Image src={InfoSecAgentLogo} alt="InfoSec Agent" width={40} height={40} m={4}/>
+                    <Title order={1} p={4}>InfoSec Agent</Title>
+                  </Center>
+                </GridCol>
+                <GridCol span={1}>
+                  
+                </GridCol>
+              </Grid>
             </AppShell.Header>
             <AppShell.Navbar>
               {navBarLinks}
@@ -83,6 +97,7 @@ function App(): JSX.Element {
             </AppShell.Main>
         </AppShell>
       </QueryClientProvider>
+      </NotificationProvider>
     </MantineProvider>
     </>
   );
