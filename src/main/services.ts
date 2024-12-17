@@ -201,7 +201,7 @@ export function runModules() {
 
 
             // Check if module supports current OS 
-            if ((isMac && !moduleInfo.os.find((os) => os === 'mac')) || (isWindows && !moduleInfo.os.find((os) => os === 'windows')) || (isLinux && moduleInfo.os.find((os) => os === 'linux'))) {
+            if ((isMac && !moduleInfo.os.find((os) => os === 'mac')) || (isWindows && !moduleInfo.os.find((os) => os === 'windows')) || (isLinux && !moduleInfo.os.find((os) => os === 'linux'))) {
                 console.error(`Cannot run module ${moduleInfo.name}: OS not supported. Supported OS: ${moduleInfo.os}`)
                 return '[]'
             } else {
