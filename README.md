@@ -1,4 +1,4 @@
-![InfoSec Agent Icon](https://github.com/AlexanderPirvu/InfoSec-Agent/blob/9c46191c175b1574f6e8d0ceda4f9c62ada418ad/resources/icon.png)
+![InfoSec Agent Icon](https://github.com/AlexanderPirvu/InfoSec-Agent/blob/9c46191c175b1574f6e8d0ceda4f9c62ada418ad/resources/icon.png =x200)
 # InfoSec Agent Linux
 
 ## Description
