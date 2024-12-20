@@ -57,7 +57,7 @@ function App(): JSX.Element {
 
   return (
     <>
-    <MantineProvider theme={mantineTheme} forceColorScheme="dark">
+    <MantineProvider theme={mantineTheme} defaultColorScheme="dark">
       <NotificationProvider>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
@@ -68,6 +68,7 @@ function App(): JSX.Element {
             breakpoint: 'sm',
           }}
           padding='md'
+          
           >
             <AppShell.Header>
               <Grid columns={4}>
@@ -78,7 +79,7 @@ function App(): JSX.Element {
                 </GridCol>
                 <GridCol span={2}>
                   <Center>
-                    <Image src={InfoSecAgentLogo} alt="InfoSec Agent" width={40} height={40} m={4}/>
+                    <Image src={InfoSecAgentLogo} alt="InfoSec Agent" width={40} height={40} m={4} />
                     <Title order={1} p={4}>InfoSec Agent</Title>
                   </Center>
                 </GridCol>

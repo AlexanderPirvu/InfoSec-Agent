@@ -1,10 +1,12 @@
-import { Badge, Indicator, Menu } from "@mantine/core";
+import { Badge, Indicator, Menu, useMantineColorScheme, useMantineTheme } from "@mantine/core";
 import { useNotification } from "@renderer/services/NotificationService";
 import { useEffect, useState } from "react";
 
 const NotificationDrawer = () => {
 
-    const appNotify = useNotification();
+    const appNotify = useNotification()
+    const theme = useMantineTheme()
+    const colorScheme = useMantineColorScheme()
 
     const [notificationCount, setNotificationCount] = useState(appNotify.getNotificationsCount());
     const [menuItems, setMenuItems] = useState<JSX.Element[]>([]);
@@ -32,7 +34,7 @@ const NotificationDrawer = () => {
     <>
       <Menu shadow="md" width={200}>
       <Menu.Target>        
-        <Badge variant="default" color={newNotifications ? "blue":"gray"} p={16}>{notificationCount}</Badge>
+        <Badge variant="default" color={notificationCount === 0 ? theme.primaryColor :"gray"} p={16}>{notificationCount}</Badge>
       </Menu.Target>
 
       <Menu.Dropdown>

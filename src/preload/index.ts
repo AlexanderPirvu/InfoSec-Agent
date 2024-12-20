@@ -8,6 +8,8 @@ const WINDOW_API = {
   // onModuleError: (callback) => ipcRenderer.on('ModuleError', (_, error) => callback(error)),
   // onModuleClose: (callback) => ipcRenderer.on('ModuleClose', (_, message) => callback(message)),
   userInfo: () => ipcRenderer.invoke("getUserInfo"),
+  getModules: () => ipcRenderer.invoke("getModules"),
+  runAllModules: () => ipcRenderer.invoke("runAllModules"),
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
