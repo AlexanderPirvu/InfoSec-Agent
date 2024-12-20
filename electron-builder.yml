@@ -11,19 +11,22 @@ files:
   - "!{.env,.env.*,.npmrc,pnpm-lock.yaml}"
   - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
   - "assets/**/*"
-  - "icon.png"
+  - "resources/icon.ico"
+  - "resources/icon.png"
+  - "resources/icon512.png"
   # - "dist"
   # - "dist-electron"
+  - "out/**/*"
 extraFiles:
-  - from: "modules"
-    to: "modules"
-  - from: "daemon"
-    to: "daemon"
+  - from: "resources/modules"
+    to: "resources/modules"
+  - from: "resources/daemon"
+    to: "resources/daemon"
+icon: resources/icon.ico
 asarUnpack:
   - resources/**
 win:
   executableName: package.json
-  icon: icon.png
 nsis:
   oneClick: false
   perMachine: false
@@ -41,7 +44,6 @@ mac:
     - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
     - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
   notarize: false
-  icon: icon.png
 dmg:
   artifactName: ${name}-${version}.${ext}
 linux:
@@ -51,7 +53,7 @@ linux:
     - deb
   maintainer: Guardian360
   category: Utility
-  icon: icon.png
+  icon: "resources/icon.png"
 appImage:
   artifactName: ${name}-Linux-${version}.${ext}
 npmRebuild: false

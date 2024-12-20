@@ -4,6 +4,7 @@ import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import * as os from "os";
 import { getModules } from "./modules/getModules";
 import { runAllModules } from "./modules/runAllModules";
+import { isWindows } from "./helpers";
 // import { spawn } from "node:child_process";
 // import { getModuleFolders, getModuleInfo, runModules } from "./services";
 // import { platform } from "node:os";
@@ -21,7 +22,7 @@ function createWindow(): void {
     // titleBarStyle: "hidden",
     resizable: true,
     // ...(process.platform === "linux" ? { icon } : {}),
-    icon: join(__dirname, "../assets/icon.png"),
+    icon: isWindows() ? join(app.getAppPath(), "resources/icon.ico") : join(app.getAppPath(), "resources/icon512.png"),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
       sandbox: false,
@@ -54,7 +55,10 @@ function createWindow(): void {
     }
   )
 
+  
+
   mainWindow.on("ready-to-show", () => {
+    mainWindow.setIcon(isWindows() ? join(app.getAppPath(), "resources/icon.ico") : join(app.getAppPath(), "resources/icon512.png"))
     mainWindow.show();
   });
 

@@ -1,15 +1,15 @@
-import { Alert, Button, Group, Paper, Text, Title, useMantineColorScheme, useMantineTheme } from '@mantine/core'
+import { Alert, Button, Group, Paper, Text, Title, useMantineColorScheme } from '@mantine/core'
 import { MoonIcon, RocketIcon, SunIcon } from '@radix-ui/react-icons'
 import { NotificationContext } from '@renderer/services/NotificationService'
 import { useMutation } from '@tanstack/react-query'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 
 const SettingsPage = () => {
     const isDebugMode = process.env.INFOSEC_AGENT_DEBUG === 'true' || process.env.INFOSEC_AGENT_DEBUG === '1'
 
     const appNotify = useContext(NotificationContext)
 
-    const theme = useMantineTheme()
+    // const theme = useMantineTheme()
     const colorScheme = useMantineColorScheme()
     const isDark = colorScheme.colorScheme === 'dark'
 

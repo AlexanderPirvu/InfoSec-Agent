@@ -1,4 +1,4 @@
-import { Badge, Indicator, Menu, useMantineColorScheme, useMantineTheme } from "@mantine/core";
+import { Badge, Indicator, Menu, useMantineTheme } from "@mantine/core";
 import { useNotification } from "@renderer/services/NotificationService";
 import { useEffect, useState } from "react";
 
@@ -6,11 +6,11 @@ const NotificationDrawer = () => {
 
     const appNotify = useNotification()
     const theme = useMantineTheme()
-    const colorScheme = useMantineColorScheme()
+    // const colorScheme = useMantineColorScheme()
 
     const [notificationCount, setNotificationCount] = useState(appNotify.getNotificationsCount());
     const [menuItems, setMenuItems] = useState<JSX.Element[]>([]);
-    const [newNotifications, setNewNotifications] = useState(false);
+    // const [newNotifications, setNewNotifications] = useState(false);
 
     useEffect(() => {
         setNotificationCount(appNotify.getNotificationsCount());
@@ -23,7 +23,7 @@ const NotificationDrawer = () => {
 
         appNotify.notifications?.forEach(notification => {
             if (!notification.read) {
-                setNewNotifications(true)
+                // setNewNotifications(true)
             }
         });
 
@@ -44,7 +44,7 @@ const NotificationDrawer = () => {
         <Menu.Divider />
         <Menu.Item
           color="red"
-          onClick={() => {appNotify.removeAllNotifications(); setNewNotifications(false)}}
+          onClick={() => {appNotify.removeAllNotifications()}}
         >
           Clear All Notifications
         </Menu.Item>
