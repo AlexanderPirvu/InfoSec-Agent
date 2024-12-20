@@ -1,13 +1,11 @@
 import { Alert, Button, Group, Paper, Text, Title, useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { MoonIcon, RocketIcon, SunIcon } from '@radix-ui/react-icons'
-import { Module } from '@renderer/interfaces/Module'
 import { NotificationContext } from '@renderer/services/NotificationService'
 import { useMutation } from '@tanstack/react-query'
 import { useContext, useState } from 'react'
 
 const SettingsPage = () => {
     const isDebugMode = process.env.INFOSEC_AGENT_DEBUG === 'true' || process.env.INFOSEC_AGENT_DEBUG === '1'
-    const [modules, setModules] = useState<Module[]>([])
 
     const appNotify = useContext(NotificationContext)
 
@@ -40,7 +38,6 @@ const SettingsPage = () => {
         },
         onSuccess: (data) => {
             console.log(data)
-            setModules(data)
         },
         onError: (error) => {
             console.error(error)
