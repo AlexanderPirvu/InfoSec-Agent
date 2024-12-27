@@ -11,6 +11,7 @@ interface Notification {
 
 export interface NotificationContextType {
     notifications: Notification[]
+    newNotification: boolean
     addNotification: (notification: Notification) => void
     removeNotification: (id: number) => void
     removeAllNotifications: () => void
@@ -67,6 +68,7 @@ interface NotificationProviderProps {
 
 export const NotificationProvider: React.FC<NotificationProviderProps> = ({ children }) => {
     const [notifications, setNotifications] = useState<Notification[]>([])
+    const [newNotificationState, setNewNotificationState] = useState<boolean>(false)
 
     const addNotification = (notification: Notification) => {
         notification.id = notifications.length + 1
@@ -75,6 +77,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
         newnot.onclick = () => {
             console.log('Notification clicked')
         }
+        setNewNotificationState(true)
     }
 
     const removeNotification = (id: number) => {
@@ -100,14 +103,20 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
         }
     }
 
+    const setNewNotification = (value: boolean) => {
+        setNewNotificationState(value)
+    }
+
     const value = {
         notifications,
+        newNotification: newNotificationState,
         addNotification,
         removeNotification,
         getNotifications,
         getNotificationsCount,
         removeAllNotifications,
-        readNotification
+        readNotification,
+        setNewNotification
     }
 
     return (

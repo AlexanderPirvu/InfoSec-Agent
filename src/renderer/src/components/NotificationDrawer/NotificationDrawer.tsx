@@ -34,7 +34,7 @@ const NotificationDrawer = () => {
     <>
       <Menu shadow="md" width={200}>
       <Menu.Target>        
-        <Badge variant="default" color={notificationCount === 0 ? theme.primaryColor :"gray"} p={16}>{notificationCount}</Badge>
+        <Badge variant="default" color={appNotify.newNotification ? theme.primaryColor : theme.primaryColor} p={16}>{notificationCount}</Badge>
       </Menu.Target>
 
       <Menu.Dropdown>
