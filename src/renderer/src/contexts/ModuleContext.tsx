@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react"
+import { set } from "yaml/dist/schema/yaml-1.1/set"
 
 
 export type ModuleConfig = {
@@ -31,6 +32,7 @@ export interface ModulesContextType {
     modules: Module[] | undefined
     results: ModuleResult[] | undefined
     fetching: boolean
+    initialRun: boolean
     // addModule: (module: string) => void
     initModules: () => Promise<Module[] | void>
     runAllModules: () => Promise<ModuleResult[] | void>
@@ -53,6 +55,7 @@ export const useModules = () => {
 }
 
 export const ModulesProvider = ({ children }: { children: React.ReactNode }) => {
+    const [initialRun, setInitialRun] = useState<boolean>(false)
     const [fetchingModules, setFetchingModules] = useState<boolean>(false)
     const [modules, setModules] = useState<Module[]>([])
     const [moduleResults, setModuleResults] = useState<ModuleResult[]>([])
@@ -77,6 +80,7 @@ export const ModulesProvider = ({ children }: { children: React.ReactNode }) => 
     }
     
     const runAllModules = async () => {
+        setInitialRun(true)
         // @ts-expect-error (API Defined in Electron preload)
         window.agentModules.getRunAllModulesProgress((ranModules: number, totalModules: number) => { 
             console.log(`Ran ${ranModules} out of ${totalModules} modules`)
@@ -108,7 +112,7 @@ export const ModulesProvider = ({ children }: { children: React.ReactNode }) => 
     // }
 
     return (
-        <ModulesContext.Provider value={{ modules, results: moduleResults, fetching: fetchingModules, initModules, runAllModules, ranModules, totalModules }}>
+        <ModulesContext.Provider value={{ modules, results: moduleResults, fetching: fetchingModules, initialRun, initModules, runAllModules, ranModules, totalModules }}>
             {children}
         </ModulesContext.Provider>
     )
