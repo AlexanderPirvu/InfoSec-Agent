@@ -1,6 +1,4 @@
-import { createContext, useContext, useState } from "react"
-import { set } from "yaml/dist/schema/yaml-1.1/set"
-
+import { createContext, useContext, useEffect, useState } from "react"
 
 export type ModuleConfig = {
     name: string
@@ -28,21 +26,25 @@ export type Module = {
     result: ModuleResult[] | undefined | any
 }
 
+export type ResultData = {
+    fail: number
+    warning: number
+    success: number
+    total: number
+}
+
 export interface ModulesContextType {
     modules: Module[] | undefined
     results: ModuleResult[] | undefined
+    resultsData: ResultData
     fetching: boolean
     initialRun: boolean
-    // addModule: (module: string) => void
     initModules: () => Promise<Module[] | void>
     runAllModules: () => Promise<ModuleResult[] | void>
     ranModules: number
     totalModules: number
-    // removeModule: (module: string) => void
-    // removeAllModules: () => void
-    // getModules: () => string[]
-    // getModulesCount: () => number
 }
+
 
 export const ModulesContext = createContext<ModulesContextType | undefined>(undefined)
 
@@ -61,12 +63,17 @@ export const ModulesProvider = ({ children }: { children: React.ReactNode }) => 
     const [moduleResults, setModuleResults] = useState<ModuleResult[]>([])
     const [ranModules, setRanModules] = useState<number>(0)
     const [totalModules, setTotalModules] = useState<number>(0)
-
-    // const addModule = (module: string) => {
-    //     setModules([...modules, module])
-    // }
-
+    const [moduleResultData, setModuleResultData] = useState<ResultData>({ fail: 0, warning: 0, success: 0, total: 0 })
     
+    useEffect(() => {
+        setModuleResultData({
+            fail: moduleResults.filter((result) => result.status === "fail").length,
+            warning: moduleResults.filter((result) => result.status === "warning").length,
+            success: moduleResults.filter((result) => result.status === "success").length,
+            total: moduleResults.length
+        })
+    }, [moduleResults.length])
+
     const initModules = async () => {
         setFetchingModules(true)
         // @ts-expect-error (API Defined in Electron preload)
@@ -95,24 +102,8 @@ export const ModulesProvider = ({ children }: { children: React.ReactNode }) => 
         return agentModulesResults
     }
 
-    // const removeModule = (module: string) => {
-    //     setModules(modules.filter((mod) => mod !== module))
-    // }
-
-    // const removeAllModules = () => {
-    //     setModules([])
-    // }
-
-    // const getModules = () => {
-    //     return modules
-    // }
-
-    // const getModulesCount = () => {
-    //     return modules.length
-    // }
-
     return (
-        <ModulesContext.Provider value={{ modules, results: moduleResults, fetching: fetchingModules, initialRun, initModules, runAllModules, ranModules, totalModules }}>
+        <ModulesContext.Provider value={{ modules, results: moduleResults, resultsData: moduleResultData, fetching: fetchingModules, initialRun, initModules, runAllModules, ranModules, totalModules }}>
             {children}
         </ModulesContext.Provider>
     )

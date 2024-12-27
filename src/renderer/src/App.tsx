@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import InfoSecAgentLogo from "./assets/InfoSec-Agent-logo.png"
 
 import '@mantine/core/styles.css'
+import '@mantine/charts/styles.css'
 import { AppShell, Box, Center, Grid, GridCol, Image, MantineColorsTuple, MantineProvider, NavLink, Title } from "@mantine/core"
 import { CheckboxIcon, Crosshair2Icon, EyeOpenIcon, GearIcon, HomeIcon, InfoCircledIcon, Link2Icon, LockClosedIcon, MixIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
