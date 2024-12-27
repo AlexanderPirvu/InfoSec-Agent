@@ -1,10 +1,9 @@
-import { Alert, Button, Card, Group, LoadingOverlay, Paper, Progress, SimpleGrid, Text, Title, useMantineColorScheme } from '@mantine/core'
+import { Alert, Button, Group, Paper, Progress, SimpleGrid, Text, Title, useMantineColorScheme } from '@mantine/core'
 import { MoonIcon, RocketIcon, SunIcon } from '@radix-ui/react-icons'
 import ModuleCard from '@renderer/components/ModuleCard/ModuleCard'
-import { ModulesContext, useModules } from '@renderer/contexts/ModuleContext'
+import { useModules } from '@renderer/contexts/ModuleContext'
 import { NotificationContext } from '@renderer/contexts/NotificationContext'
 import { useMutation } from '@tanstack/react-query'
-import { app } from 'electron'
 import { useContext } from 'react'
 
 const SettingsPage = () => {

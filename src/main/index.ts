@@ -5,7 +5,6 @@ import * as os from "os";
 import { getModules } from "./modules/getModules";
 import { runAllModules } from "./modules/runAllModules";
 import { isWindows } from "./helpers";
-import { runModule } from "./modules/runModule";
 import { Module } from "./modules/interfaces/Module";
 // import { spawn } from "node:child_process";
 // import { getModuleFolders, getModuleInfo, runModules } from "./services";
