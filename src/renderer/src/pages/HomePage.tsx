@@ -1,13 +1,11 @@
-import { Card, SimpleGrid, Text } from '@mantine/core'
-import { HomeIcon } from '@radix-ui/react-icons'
-import RunModulesButton from '@renderer/components/RunModulesButton/RunModulesButton'
+import { Badge, Box, Button, Card, Flex, Grid, GridCol, Group, Image, LoadingOverlay, Skeleton, Text } from '@mantine/core'
+import AllNotificationChart from '@renderer/components/AllNotificationChart/AllNotificationChart'
 import { useMutation } from '@tanstack/react-query'
 import { useState, useEffect } from 'react'
 
 const HomePage = () => {
 
   const [username, setUsername] = useState<string | null>(null)
-  const [moduleInfo, setModuleInfo] = useState<string[] | null >(null)
 
   const userInfo = useMutation({
     mutationKey: ['userInfo'],
@@ -28,35 +26,47 @@ const HomePage = () => {
     userInfo.mutate()
   }, [])
 
-  const homepageFeatures = [ 
-    {title: 'Test', description: '', icon: HomeIcon},
-  ]
-
-  const featuresCards = homepageFeatures.map((feature) => (
-    <Card key={feature.title} shadow='lg'>
-      <feature.icon />
-      <Text>{feature.title}</Text>
-    </Card>
-  ))
-
   return (
     <>
       <h1>Welcome{username ? `, ${username}` : ''}</h1>
-      <SimpleGrid cols={{ base: 1, md: 3}} spacing='lg' >
-        {featuresCards}
-      </SimpleGrid>
-      <RunModulesButton setModuleInfo={setModuleInfo} />
-      <h3>{moduleInfo ? (
-        moduleInfo.map((module) => (
-          Object.entries(JSON.parse(module)).map(([key, value]) => (
-            <div key={key} style={{ display: 'flex', alignItems: 'center' }}>
-              <h4 style={{ marginRight: '8px' }}>{key}</h4>
-              <span> =&gt; </span>
-              <p style={{ marginLeft: '8px' }}>{value as string}</p>
-            </div>
-          ))
-        ))
-      ) : 'fu'}</h3>
+      <Grid mt="xl">
+        <GridCol span={6}>
+          <Card shadow='lg'>
+            <Card.Section>
+              <Image src='https://via.placeholder.com/150' h={100} alt='placeholder' />
+            </Card.Section>
+            <Group justify='space-between' mt="md" mb="xs">
+              <Text fw={900}>Hello Linux!</Text>
+              <Badge color='yellow'>Linux</Badge>
+            </Group>
+            <Text size='sm'>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nunc nec
+              consectetur dictum, libero odio 
+            </Text>
+            <Button variant='light' size='sm' mt='md'>Read More</Button>
+          </Card>
+        </GridCol>
+        <GridCol span={6}>
+          <Box pos="relative">
+            <LoadingOverlay visible />
+            <Flex direction='row' align='center' justify="flex-start" wrap='wrap' gap='md'>
+            <Card shadow='lg' w='45%'>
+              <Skeleton height={100} animate={false} />
+            </Card>
+            <Card shadow='lg' w='45%'>
+              <Skeleton height={100} animate={false} />
+            </Card>
+            <Card shadow='lg' w='45%'>
+              <Skeleton height={100} animate={false} />
+            </Card>
+            <Card shadow='lg' w='45%'>
+              <Skeleton height={100} animate={false} />
+            </Card>
+            </Flex>
+          </Box>
+        </GridCol>
+      </Grid>
+      <AllNotificationChart />
     </>
   )
 }

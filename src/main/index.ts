@@ -1,22 +1,31 @@
-import { app, shell, BrowserWindow, ipcMain } from "electron";
+import { app, shell, BrowserWindow, ipcMain, ipcRenderer } from "electron";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
-import { runModules } from "./services";
 import * as os from "os";
+import { getModules } from "./modules/getModules";
+import { runAllModules } from "./modules/runAllModules";
+import { isWindows } from "./helpers";
+import { Module } from "./modules/interfaces/Module";
 // import { spawn } from "node:child_process";
 // import { getModuleFolders, getModuleInfo, runModules } from "./services";
 // import { platform } from "node:os";
 // import icon from "../assets/icon.png";
 
+let agentModules: Module[] = []
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 100,
+    height: 750,
+    minWidth: 900,
+    minHeight: 600,
     show: false,
     autoHideMenuBar: true,
+    // titleBarStyle: "hidden",
+    resizable: true,
     // ...(process.platform === "linux" ? { icon } : {}),
-    icon: join(__dirname, "../assets/icon.png"),
+    icon: isWindows() ? join(app.getAppPath(), "resources/icon.ico") : join(app.getAppPath(), "resources/icon512.png"),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
       sandbox: false,
@@ -49,8 +58,14 @@ function createWindow(): void {
     }
   )
 
+  
+
   mainWindow.on("ready-to-show", () => {
+    mainWindow.setIcon(isWindows() ? join(app.getAppPath(), "resources/icon.ico") : join(app.getAppPath(), "resources/icon512.png"))
     mainWindow.show();
+    if (process.env.INFOSEC_AGENT_DEBUG === 'true') {
+      mainWindow.webContents.openDevTools();
+    }
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -94,123 +109,29 @@ app.whenReady().then(() => {
 
   // ipcMain.handle("sendNotification", (_, notification) => {
 
+  // const modtest = runModule({
+  //   name: "pwd-test",
+  //   config: {
+  //     name: "test",
+  //     os: ["linux", "windows"],
+  //     isSudo: false,
+  //     exec: "password_scanner",
+  //     args: []
+  //   },
+  //   path: "/home/apirvu/InfoSec-Agent/InfoSec-Agent/resources/modules/password_module",
+  //   result: []
+  // })
 
+  
   // IPC Handlers
-  ipcMain.on("runModule", async (event, moduleName) => {
-    // console.log(`Running module ${moduleName}`)
-    try {
+  ipcMain.handle("getModules", async () => {
+    agentModules = getModules()
+    return agentModules
+  })
 
-      console.log("fa")
-      console.log(moduleName)
-
-      const modulesOutput = runModules()
-      console.log(modulesOutput)
-      event.sender.send('moduleData', modulesOutput)
-
-      // TODO: fix regex
-      // if (!/^[a-zA-Z0-9-_]+$/.test(moduleName)) {
-      //   throw new Error('Invalid module executable name!')
-      // }
-
-      // TODO: Go through and find each module folder
-      // Construct the path to modules
-
-      // ##
-      // let lastEntry = platform() == "win32" ? "password_scanner.exe" : "password_scanner"
-      
-      
-      
-      // try {
-      //   const appDataPath = app.getPath("appData")
-      //   lastEntry += 'password_scanner.exe'
-      // } catch {
-      //   lastEntry += 'password_scanner'
-      // }
-
-      // ##
-      // const modulePath = path.join(process.resourcesPath, 'modules', 'pwd', lastEntry)
-      // console.log(`Going to: ${modulePath}!`)
-
-
-      // const moduleFolderPath = path.join(app.getAppPath(), 'modules')
-      // console.log(getModuleFolders().forEach(element => {
-      //   console.log(getModuleInfo(path.join(moduleFolderPath, element)))
-      // }))
-
-      // runModules()
-
-      // const moduleName = "NotModule"
-
-      // const process = utilityProcess.fork("ls", [], {})
-
-      // process.on('spawn', () => {
-      //   console.log(`Started: ${process.pid}`)
-      // })
-
-      // //@ts-ignore
-      // process.stdout.on('data', (msg) => {
-      //   console.log(`Data: ${msg}`)
-      // })
-
-      // process.on('exit', () => {
-      //   console.log(`Exited: ${process.pid}`)
-      // })
-
-      // NODEJS NATIVE SPAWN
-
-      // const spawnedProcess = spawn(modulePath)
-      // // const process = spawn(path.join(moduleFolderPath, 'pwd', 'password_scanner'))
-      // // const process = spawn('dir')
-      // // const process = spawn('dir', [], { shell: true })
-
-      // // console.log(process)
-      // // console.log(`Running module ${moduleName} from ${modulePath}`)
-
-      // spawnedProcess.stdout.on('data', (data) => {
-      //   console.log(`Module ${moduleName} data: ${data.toString()}`)
-      //   event.sender.send('moduleData', data.toString())
-      // })
-
-      // // console.log("HERE")
-
-      // spawnedProcess.stderr.on('data', (data) => {
-      //   console.error(`${data}`)
-      // })
-
-      // spawnedProcess.stderr.on('end', (end) => console.log(end))
-
-      // spawnedProcess.stderr.on('error', (end) => console.log(end))
-
-      // spawnedProcess.stderr.on('close', (data) => {
-      //   console.log(`Module ${moduleName} error: ${data}`)
-      //   event.sender.send('moduleError', data.toString())
-      // })
-
-      // spawnedProcess.on('close', (code) => {
-      //   console.log(`Module ${moduleName} exit code: ${code}`)
-      //   event.sender.send('moduleClose', `Process ${moduleName} exited with code ${code}`)
-      // })
-
-
-//       import { spawn } from 'node:child_process';
-// const ls = spawn('ls', ['-lh', '/usr']);
-
-// ls.stdout.on('data', (data) => {
-//   console.log(`stdout: ${data}`);
-// });
-
-// ls.stderr.on('data', (data) => {
-//   console.error(`stderr: ${data}`);
-// });
-
-// ls.on('close', (code) => {
-//   console.log(`child process exited with code ${code}`);
-// });
-
-    } catch (error) {
-      event.sender.send('moduleError', error)
-    }
-  });
+  ipcMain.handle("runAllModules", async () => {
+    return await runAllModules(ipcRenderer)
+  })
 
   createWindow();
 

@@ -8,6 +8,15 @@ const WINDOW_API = {
   // onModuleError: (callback) => ipcRenderer.on('ModuleError', (_, error) => callback(error)),
   // onModuleClose: (callback) => ipcRenderer.on('ModuleClose', (_, message) => callback(message)),
   userInfo: () => ipcRenderer.invoke("getUserInfo"),
+  getModules: () => ipcRenderer.invoke("getModules"),
+  runAllModules: () => ipcRenderer.invoke("runAllModules"),
+
+}
+
+const AGENT_MODULES_API = {
+    getModules: () => ipcRenderer.invoke("getModules"),
+    runAllModules: () => ipcRenderer.invoke("runAllModules"),
+    getRunAllModulesProgress: (callback) => ipcRenderer.on('runAllModulesProgress', (_, ranModules: number, totalModules: number) => callback(ranModules, totalModules))
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
@@ -17,6 +26,7 @@ if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld("electron", electronAPI);
     contextBridge.exposeInMainWorld("api", WINDOW_API);
+    contextBridge.exposeInMainWorld("agentModules", AGENT_MODULES_API);
   } catch (error) {
     console.error(error);
   }
@@ -25,4 +35,6 @@ if (process.contextIsolated) {
   window.electron = electronAPI;
   // @ts-ignore (define in dts)
   window.api = WINDOW_API;
+  // @ts-ignore (define in dts)
+  window.agentModules = AGENT_MODULES_API;
 }
