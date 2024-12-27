@@ -9,9 +9,17 @@ import (
     "os/exec"
 )
 
+func getEnv(key, fallback string) string {
+    if value, exists := os.LookupEnv(key); exists {
+        return value
+    }
+    return fallback
+}
+
 const (
-    authToken = "token" // Change this to a strong token
+    authToken = getEnv("INFOSEC_AGENT_KEY", "token") // Change "default_token" to a strong default token if needed
 )
+
 
 type CommandRequest struct {
     Command string `json:"command"`

@@ -1,4 +1,5 @@
-import { Badge, Button, Card, Flex, Grid, GridCol, Group, Image, Skeleton, Text } from '@mantine/core'
+import { Badge, Box, Button, Card, Flex, Grid, GridCol, Group, Image, LoadingOverlay, Skeleton, Text } from '@mantine/core'
+import AllNotificationChart from '@renderer/components/AllNotificationChart/AllNotificationChart'
 import { useMutation } from '@tanstack/react-query'
 import { useState, useEffect } from 'react'
 
@@ -46,22 +47,26 @@ const HomePage = () => {
           </Card>
         </GridCol>
         <GridCol span={6}>
-          <Flex direction='row' align='center' justify="flex-start" wrap='wrap' gap='md'>
-          <Card shadow='lg' w='45%'>
-            <Skeleton height={100} animate={false} />
-          </Card>
-          <Card shadow='lg' w='45%'>
-            <Skeleton height={100} animate={false} />
-          </Card>
-          <Card shadow='lg' w='45%'>
-            <Skeleton height={100} animate={false} />
-          </Card>
-          <Card shadow='lg' w='45%'>
-            <Skeleton height={100} animate={false} />
-          </Card>
-          </Flex>
+          <Box pos="relative">
+            <LoadingOverlay visible />
+            <Flex direction='row' align='center' justify="flex-start" wrap='wrap' gap='md'>
+            <Card shadow='lg' w='45%'>
+              <Skeleton height={100} animate={false} />
+            </Card>
+            <Card shadow='lg' w='45%'>
+              <Skeleton height={100} animate={false} />
+            </Card>
+            <Card shadow='lg' w='45%'>
+              <Skeleton height={100} animate={false} />
+            </Card>
+            <Card shadow='lg' w='45%'>
+              <Skeleton height={100} animate={false} />
+            </Card>
+            </Flex>
+          </Box>
         </GridCol>
       </Grid>
+      <AllNotificationChart />
     </>
   )
 }

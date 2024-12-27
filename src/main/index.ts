@@ -1,13 +1,17 @@
-import { app, shell, BrowserWindow, ipcMain } from "electron";
+import { app, shell, BrowserWindow, ipcMain, ipcRenderer } from "electron";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import * as os from "os";
 import { getModules } from "./modules/getModules";
 import { runAllModules } from "./modules/runAllModules";
+import { isWindows } from "./helpers";
+import { Module } from "./modules/interfaces/Module";
 // import { spawn } from "node:child_process";
 // import { getModuleFolders, getModuleInfo, runModules } from "./services";
 // import { platform } from "node:os";
 // import icon from "../assets/icon.png";
+
+let agentModules: Module[] = []
 
 function createWindow(): void {
   // Create the browser window.
@@ -21,7 +25,7 @@ function createWindow(): void {
     // titleBarStyle: "hidden",
     resizable: true,
     // ...(process.platform === "linux" ? { icon } : {}),
-    icon: join(__dirname, "../assets/icon.png"),
+    icon: isWindows() ? join(app.getAppPath(), "resources/icon.ico") : join(app.getAppPath(), "resources/icon512.png"),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
       sandbox: false,
@@ -54,8 +58,14 @@ function createWindow(): void {
     }
   )
 
+  
+
   mainWindow.on("ready-to-show", () => {
+    mainWindow.setIcon(isWindows() ? join(app.getAppPath(), "resources/icon.ico") : join(app.getAppPath(), "resources/icon512.png"))
     mainWindow.show();
+    if (process.env.INFOSEC_AGENT_DEBUG === 'true') {
+      mainWindow.webContents.openDevTools();
+    }
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -99,14 +109,28 @@ app.whenReady().then(() => {
 
   // ipcMain.handle("sendNotification", (_, notification) => {
 
+  // const modtest = runModule({
+  //   name: "pwd-test",
+  //   config: {
+  //     name: "test",
+  //     os: ["linux", "windows"],
+  //     isSudo: false,
+  //     exec: "password_scanner",
+  //     args: []
+  //   },
+  //   path: "/home/apirvu/InfoSec-Agent/InfoSec-Agent/resources/modules/password_module",
+  //   result: []
+  // })
+
   
   // IPC Handlers
-  ipcMain.handle("getModules", () => {
-    getModules()
+  ipcMain.handle("getModules", async () => {
+    agentModules = getModules()
+    return agentModules
   })
 
-  ipcMain.handle("runAllModules", () => {
-    runAllModules()
+  ipcMain.handle("runAllModules", async () => {
+    return await runAllModules(ipcRenderer)
   })
 
   createWindow();

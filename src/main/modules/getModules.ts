@@ -20,7 +20,7 @@ export function getModules(): Module[] {
                 name: moduleInfo.name,
                 path: path.join(getModulesPath(), module),
                 config: moduleInfo,
-                result: null,
+                result: undefined,
             } as Module
         }
         return undefined
