@@ -10,8 +10,9 @@ import { CheckboxIcon, Crosshair2Icon, EyeOpenIcon, GearIcon, HomeIcon, InfoCirc
 import { useState } from "react"
 import HomePage from "./pages/HomePage"
 import SettingsPage from "./pages/SettingsPage"
-import { NotificationProvider } from "./services/NotificationService"
+import { NotificationProvider } from "./contexts/NotificationContext"
 import NotificationDrawer from "./components/NotificationDrawer/NotificationDrawer"
+import { ModulesProvider } from "./contexts/ModuleContext"
 
 const queryClient = new QueryClient()
 
@@ -58,14 +59,14 @@ function App(): JSX.Element {
   return (
     <>
     <MantineProvider theme={mantineTheme} defaultColorScheme="dark">
-      <NotificationProvider>
       <QueryClientProvider client={queryClient}>
+      <NotificationProvider><ModulesProvider> {/* App-based Providers */}
         <ReactQueryDevtools initialIsOpen={false} />
         <AppShell
           header={{ height: 60 }}
           navbar={{
             width: 200,
-            breakpoint: 'sm',
+            breakpoint: 'xs',
           }}
           padding='md'
           
@@ -97,8 +98,8 @@ function App(): JSX.Element {
               </Section>
             </AppShell.Main>
         </AppShell>
+      </ModulesProvider></NotificationProvider> {/* App-based Providers */}
       </QueryClientProvider>
-      </NotificationProvider>
     </MantineProvider>
     </>
   );

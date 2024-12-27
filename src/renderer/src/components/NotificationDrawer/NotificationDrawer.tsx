@@ -1,5 +1,5 @@
 import { Badge, Indicator, Menu, useMantineTheme } from "@mantine/core";
-import { useNotification } from "@renderer/services/NotificationService";
+import { useNotification } from "@renderer/contexts/NotificationContext";
 import { useEffect, useState } from "react";
 
 const NotificationDrawer = () => {
