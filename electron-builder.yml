@@ -1,5 +1,5 @@
 appId: nl.fontysict.infosecagent
-productName: InfoSec Agent
+productName: InfoSecAgent
 directories:
   buildResources: build
   # output: release
@@ -54,6 +54,8 @@ linux:
   maintainer: Guardian360
   category: Utility
   icon: "resources/icon.png"
+deb:
+  afterInstall: "resources/daemon/install-service.bash"
 appImage:
   artifactName: ${name}-Linux-${version}.${ext}
 npmRebuild: false

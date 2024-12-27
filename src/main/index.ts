@@ -63,6 +63,9 @@ function createWindow(): void {
   mainWindow.on("ready-to-show", () => {
     mainWindow.setIcon(isWindows() ? join(app.getAppPath(), "resources/icon.ico") : join(app.getAppPath(), "resources/icon512.png"))
     mainWindow.show();
+    if (process.env.INFOSEC_AGENT_DEBUG === 'true') {
+      mainWindow.webContents.openDevTools();
+    }
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
