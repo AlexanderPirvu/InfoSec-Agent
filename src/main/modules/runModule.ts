@@ -1,7 +1,7 @@
-import { spawn, spawnSync } from "child_process"
+import { spawnSync } from "child_process"
 import { Module } from "./interfaces/Module"
 import { ModuleResult } from "./interfaces/ModuleResult"
-import { debugLog, getJsonFilter, isOSCompatible, isWindows } from "../helpers"
+import { debugLog, getJsonFilter, isOSCompatible } from "../helpers"
 import path from "path"
 import { runModuleSudo } from "./runModuleSudo"
 
