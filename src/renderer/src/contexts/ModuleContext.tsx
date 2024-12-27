@@ -29,11 +29,11 @@ export type Module = {
 
 export interface ModulesContextType {
     modules: Module[] | undefined
-    results: JSON[] | undefined
+    results: ModuleResult[] | undefined
     fetching: boolean
     // addModule: (module: string) => void
     initModules: () => Promise<Module[] | void>
-    runAllModules: () => Promise<JSON[] | void>
+    runAllModules: () => Promise<ModuleResult[] | void>
     ranModules: number
     totalModules: number
     // removeModule: (module: string) => void
@@ -55,7 +55,7 @@ export const useModules = () => {
 export const ModulesProvider = ({ children }: { children: React.ReactNode }) => {
     const [fetchingModules, setFetchingModules] = useState<boolean>(false)
     const [modules, setModules] = useState<Module[]>([])
-    const [moduleResults, setModuleResults] = useState<JSON[]>([])
+    const [moduleResults, setModuleResults] = useState<ModuleResult[]>([])
     const [ranModules, setRanModules] = useState<number>(0)
     const [totalModules, setTotalModules] = useState<number>(0)
 
@@ -87,7 +87,7 @@ export const ModulesProvider = ({ children }: { children: React.ReactNode }) => 
         // @ts-expect-error (API Defined in Electron preload)
         const agentModulesResults = await window.agentModules.runAllModules()
         setModuleResults(agentModulesResults)
-
+        console.log("Agent Modules Results:", agentModulesResults)
         return agentModulesResults
     }
 
