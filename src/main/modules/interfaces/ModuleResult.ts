@@ -1,5 +1,5 @@
 export interface ModuleResult {
-    status: "success" | "warn" | "fail"
+    status: "success" | "warning" | "fail"
     message: string
     fix?: string
     moduleName: string

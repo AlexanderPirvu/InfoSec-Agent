@@ -14,7 +14,7 @@ export type ModuleConfig = {
 }
 
 export type ModuleResult = {
-    status: "success" | "warn" | "fail"
+    status: "success" | "warning" | "fail"
     message: string
     fix?: string
     moduleName: string
