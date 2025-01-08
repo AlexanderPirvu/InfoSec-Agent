@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const sudoAPI = axios.create({
     baseURL: 'http://127.0.0.1:5879',
-    timeout: 10000,
+    timeout: 300000,
     headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${process.env.INFOSEC_AGENT_KEY}`
