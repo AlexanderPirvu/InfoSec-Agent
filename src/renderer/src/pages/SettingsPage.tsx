@@ -3,11 +3,11 @@ import { MoonIcon, RocketIcon, SunIcon } from '@radix-ui/react-icons'
 import ModuleCard from '@renderer/components/ModuleCard/ModuleCard'
 import { useModules } from '@renderer/contexts/ModuleContext'
 import { NotificationContext } from '@renderer/contexts/NotificationContext'
+import { isDebugMode } from '@renderer/services/DebugService'
 import { useMutation } from '@tanstack/react-query'
 import { useContext } from 'react'
 
 const SettingsPage = () => {
-    const isDebugMode = process.env.INFOSEC_AGENT_DEBUG === 'true' || process.env.INFOSEC_AGENT_DEBUG === '1'
 
     const appNotify = useContext(NotificationContext)
     const appModules = useModules()
@@ -66,10 +66,6 @@ const SettingsPage = () => {
         }
     })
 
-    //   const colorSelect = [
-    //     { value: theme.colors.blue[7], label: 'Blue' },
-    //     { value: 1, label: 'Dark' }
-    //   ]
     console.log(appModules.ranModules)
     console.log(appModules.totalModules)
   return (
