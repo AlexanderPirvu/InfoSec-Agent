@@ -8,7 +8,7 @@ import '@mantine/core/styles.css'
 import '@mantine/charts/styles.css'
 import { AppShell, Box, Center, Grid, GridCol, Image, MantineColorsTuple, MantineProvider, NavLink, Title, Transition } from "@mantine/core"
 import { CheckboxIcon, Crosshair2Icon, EyeOpenIcon, GearIcon, HomeIcon, InfoCircledIcon, Link2Icon, LockClosedIcon, MixIcon } from "@radix-ui/react-icons"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import HomePage from "./pages/HomePage"
 import SettingsPage from "./pages/SettingsPage"
 import { NotificationProvider } from "./contexts/NotificationContext"
