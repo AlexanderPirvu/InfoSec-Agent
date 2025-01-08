@@ -17,6 +17,7 @@ import { ModulesProvider } from "./contexts/ModuleContext"
 import ChecksPage from "./pages/ChecksPage"
 import ProgramsPage from "./pages/ProgramsPage"
 import AboutPage from "./pages/AboutPage"
+import IntegrationPage from "./pages/IntegrationPage"
 
 const queryClient = new QueryClient()
 
@@ -51,7 +52,7 @@ function App(): JSX.Element {
     { label: 'Issues', icon: Crosshair2Icon, pageElement: () => <div>Issues Page</div> }, 
     { label: 'Programs', icon: MixIcon, pageElement: ProgramsPage }, 
     { label: 'Checks', icon: CheckboxIcon, pageElement: ChecksPage }, 
-    { label: 'Integration', icon: Link2Icon, pageElement: () => <div>Integration Page</div> }, 
+    { label: 'Integration', icon: Link2Icon, pageElement: IntegrationPage }, 
     { label: 'About', icon: InfoCircledIcon, pageElement: AboutPage }, 
     { label: 'Settings', icon: GearIcon, pageElement: SettingsPage },
   ]
