@@ -9,16 +9,17 @@ import '@mantine/charts/styles.css'
 import { AppShell, Box, Center, Grid, GridCol, Image, MantineColorsTuple, MantineProvider, NavLink, Title, Transition } from "@mantine/core"
 import { CheckboxIcon, Crosshair2Icon, EyeOpenIcon, GearIcon, HomeIcon, InfoCircledIcon, Link2Icon, LockClosedIcon, MixIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
-import HomePage from "./pages/HomePage"
-import SettingsPage from "./pages/SettingsPage"
 import { NotificationProvider } from "./contexts/NotificationContext"
 import NotificationDrawer from "./components/NotificationDrawer/NotificationDrawer"
 import { ModulesProvider } from "./contexts/ModuleContext"
+import { isDebugMode } from "./services/DebugService"
 import ChecksPage from "./pages/ChecksPage"
 import ProgramsPage from "./pages/ProgramsPage"
 import AboutPage from "./pages/AboutPage"
 import IntegrationPage from "./pages/IntegrationPage"
-import { isDebugMode } from "./services/DebugService"
+import HomePage from "./pages/HomePage"
+import SettingsPage from "./pages/SettingsPage"
+import SecurityPage from "./pages/SecurityPage"
 
 const queryClient = new QueryClient()
 
@@ -49,7 +50,7 @@ function App(): JSX.Element {
 
     const pages = [
         { label: 'Home', icon: HomeIcon, pageElement: HomePage }, 
-        { label: 'Security', icon: LockClosedIcon, pageElement: () => <div>Security Page</div> }, 
+        { label: 'Security', icon: LockClosedIcon, pageElement: SecurityPage }, 
         { label: 'Privacy', icon: EyeOpenIcon, pageElement: () => <div>Privacy Page</div> }, 
         { label: 'Issues', icon: Crosshair2Icon, pageElement: () => <div>Issues Page</div> }, 
         { label: 'Programs', icon: MixIcon, pageElement: ProgramsPage }, 

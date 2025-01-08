@@ -56,7 +56,7 @@ const ProgramsPage = () => {
             <Paper shadow='lg' radius='md' p={20} m={10}>
                 <Title order={2}>Installed Programs</Title>
                 <TextInput placeholder='Search Programs' leftSection={<MagnifyingGlassIcon />} value={search} onChange={handleSearch} m={10}/>
-                <ScrollArea>
+                <ScrollArea h='60vh' scrollbarSize={20}>
                 <Table>
                     <Table.Thead>
                         <Table.Tr>

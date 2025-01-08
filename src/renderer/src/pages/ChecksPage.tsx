@@ -1,26 +1,29 @@
-import { Button, Group, Paper, Text, Title } from '@mantine/core'
+import { Card, Paper, Text, Title } from '@mantine/core'
+import { useModules } from '@renderer/contexts/ModuleContext'
 
 const ChecksPage = () => {
 
-  return (
-    <>
-        <Title order={1} m={10}>Checks</Title>
-        <Paper shadow='lg' radius='md' p={20} m={10}>
-            <Title order={2}>Security Checks</Title>
-            <Text size='md' fw={200} mt={5}>Notifications</Text>
-            <Text size='sm' mt={5}>Testing operations for notification system</Text>
-            <Group>
-                <Button variant='default' m={5}>Add Test Notification</Button>
-                <Button variant='default' m={5}>Clear All Notifications</Button>
-            </Group>
-            <Text size='md' fw={700} mt={5}>Modules</Text>
-            <Text size='sm' mt={5}>Testing operations for agent module system</Text>
-            <Button variant='default' m={5}>Get Modules</Button>
-            <Button variant='default' m={5}>Get Modules 2</Button>
-            <Button variant='default' m={5}>Run All Modules</Button>
-        </Paper>
-    </>
-  )
+    const appModules = useModules()
+
+    const moduleDescriptions = appModules.modules?.map((module) => {
+        return (
+            <Card shadow='xs' radius='md' p={10} m={5}>
+                <Title order={3}>{module.name}</Title>
+                <Text size='sm' mt={5}>{module.config.desc}</Text>
+                <Text size='xs' mt={5}>Authors: {module.config.authors?.join(', ')}</Text>
+                <Text size='xs' mt={5}>Module Version: {module.config.version}</Text>
+            </Card>
+        )
+    })
+
+    return (
+        <>
+            <Title order={1} m={10}>Checks</Title>
+            <Paper shadow='lg' radius='md' p={20} m={10}>
+                {moduleDescriptions}
+            </Paper>
+        </>
+    )
 }
 
 export default ChecksPage
