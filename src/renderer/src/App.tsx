@@ -48,15 +48,15 @@ function App(): JSX.Element {
     const [currentpage, setCurrentPage] = useState({label: 'Home', icon: HomeIcon, pageElement: HomePage})
 
     const pages = [
-      { label: 'Home', icon: HomeIcon, pageElement: HomePage }, 
-      { label: 'Security', icon: LockClosedIcon, pageElement: () => <div>Security Page</div> }, 
-      { label: 'Privacy', icon: EyeOpenIcon, pageElement: () => <div>Privacy Page</div> }, 
-      { label: 'Issues', icon: Crosshair2Icon, pageElement: () => <div>Issues Page</div> }, 
-      { label: 'Programs', icon: MixIcon, pageElement: ProgramsPage }, 
-      { label: 'Checks', icon: CheckboxIcon, pageElement: ChecksPage }, 
-      { label: 'Integration', icon: Link2Icon, pageElement: IntegrationPage }, 
-      { label: 'About', icon: InfoCircledIcon, pageElement: AboutPage }, 
-      { label: 'Settings', icon: GearIcon, pageElement: SettingsPage },
+        { label: 'Home', icon: HomeIcon, pageElement: HomePage }, 
+        { label: 'Security', icon: LockClosedIcon, pageElement: () => <div>Security Page</div> }, 
+        { label: 'Privacy', icon: EyeOpenIcon, pageElement: () => <div>Privacy Page</div> }, 
+        { label: 'Issues', icon: Crosshair2Icon, pageElement: () => <div>Issues Page</div> }, 
+        { label: 'Programs', icon: MixIcon, pageElement: ProgramsPage }, 
+        { label: 'Checks', icon: CheckboxIcon, pageElement: ChecksPage }, 
+        { label: 'Integration', icon: Link2Icon, pageElement: IntegrationPage }, 
+        { label: 'About', icon: InfoCircledIcon, pageElement: AboutPage }, 
+        { label: 'Settings', icon: GearIcon, pageElement: SettingsPage },
     ]
 
     const navBarLinks = pages.map((page) => (
