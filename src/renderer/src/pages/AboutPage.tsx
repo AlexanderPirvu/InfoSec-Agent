@@ -4,7 +4,7 @@ const AboutPage = () => {
 
   return (
     <>
-        <Title order={1}>About</Title>
+        <Title order={1} m={10}>About</Title>
         <Paper shadow='lg' radius='md' p={20} m={10}>
             <Title order={2}>Summary</Title>
             <Text size='md' mt={5}>

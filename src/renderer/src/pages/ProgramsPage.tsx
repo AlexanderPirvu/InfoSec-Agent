@@ -52,7 +52,7 @@ const ProgramsPage = () => {
     
     return (
         <>
-            <Title order={1}>Programs</Title>
+            <Title order={1} m={10}>Programs</Title>
             <Paper shadow='lg' radius='md' p={20} m={10}>
                 <Title order={2}>Installed Programs</Title>
                 <TextInput placeholder='Search Programs' leftSection={<MagnifyingGlassIcon />} value={search} onChange={handleSearch} m={10}/>

@@ -4,7 +4,7 @@ const ChecksPage = () => {
 
   return (
     <>
-        <Title order={1}>Checks</Title>
+        <Title order={1} m={10}>Checks</Title>
         <Paper shadow='lg' radius='md' p={20} m={10}>
             <Title order={2}>Security Checks</Title>
             <Text size='md' fw={200} mt={5}>Notifications</Text>

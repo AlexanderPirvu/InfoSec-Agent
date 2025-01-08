@@ -4,7 +4,7 @@ const IntegrationPage = () => {
 
   return (
     <>
-        <Title order={1}>Integration</Title>
+        <Title order={1} m={10}>Integration</Title>
         <Paper shadow='lg' radius='md' p={20} m={10}>
             <Title order={2}>Connect to the Lighthouse API</Title>
             <Text size='md' mt={5}>

@@ -74,7 +74,7 @@ const SettingsPage = () => {
     console.log(appModules.totalModules)
   return (
     <>
-        <Title order={1}>Settings</Title>
+        <Title order={1} m={10}>Settings</Title>
         {isDebugMode && (
             <Alert variant='light' color='orange' title='Debugging Enabled' icon={<RocketIcon />} m={10}>
                 Debugging is enabled. This may expose sensitive information to the console! Disable this feature when not needed. Additional settings are visible, proceed with caution.
