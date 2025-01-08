@@ -111,3 +111,60 @@ export function getJsonFilter(input: string): JSON[] {
     }
     return []
 }
+
+export function getAllPrograms(): { name: string, version: string }[] {
+    const os = require('os')
+    const fs = require('fs')
+    const path = require('path')
+    const execSync = require('child_process').execSync
+
+    const programs: { name: string, version: string }[] = []
+
+    if (os.type() === 'Windows_NT') {
+        const programFiles = process.env.ProgramFiles
+        const programList = fs.readdirSync(programFiles)
+
+        programList.forEach(program => {
+            let version = 'unknown'
+            try {
+                const output = execSync(`wmic datafile where name="${path.join(programFiles, program).replace(/\\/g, '\\\\')}" get Version /value`).toString()
+                const match = output.match(/Version=(.*)/)
+                if (match) {
+                    version = match[1].trim()
+                }
+            } catch (error) {
+                // Ignore errors and keep version as 'unknown'
+            }
+            programs.push({ name: program, version })
+        })
+    } else if (os.type() === 'Linux') {
+        try {
+            const output = execSync('dpkg-query -W -f=\'${binary:Package} ${Version}\n\'').toString()
+            const lines = output.split('\n')
+            lines.forEach(line => {
+                const [name, version] = line.split(' ')
+                if (name && version) {
+                    programs.push({ name, version })
+                }
+            })
+        } catch (error) {
+            // Ignore errors and keep programs list empty
+        }
+    } else {
+        const programFiles = '/usr/bin'
+        const programList = fs.readdirSync(programFiles)
+
+        programList.forEach(program => {
+            let version = 'unknown'
+            try {
+                const output = execSync(`${path.join(programFiles, program)} --version`).toString()
+                version = output.split('\n')[0].trim()
+            } catch (error) {
+                // Ignore errors and keep version as 'unknown'
+            }
+            programs.push({ name: program, version })
+        })
+    }
+
+    return programs
+}
