@@ -1,0 +1,9 @@
+name: "Sudo Access Audit"
+desc: "Checking sudo access configurations"
+version: 0.0.1
+os:
+  - linux
+isSudo: true
+exec: sudo_audit
+args:
+  - ""
