@@ -16,6 +16,7 @@ import NotificationDrawer from "./components/NotificationDrawer/NotificationDraw
 import { ModulesProvider } from "./contexts/ModuleContext"
 import ChecksPage from "./pages/ChecksPage"
 import ProgramsPage from "./pages/ProgramsPage"
+import AboutPage from "./pages/AboutPage"
 
 const queryClient = new QueryClient()
 
@@ -51,7 +52,7 @@ function App(): JSX.Element {
     { label: 'Programs', icon: MixIcon, pageElement: ProgramsPage }, 
     { label: 'Checks', icon: CheckboxIcon, pageElement: ChecksPage }, 
     { label: 'Integration', icon: Link2Icon, pageElement: () => <div>Integration Page</div> }, 
-    { label: 'About', icon: InfoCircledIcon, pageElement: () => <div>About Page</div> }, 
+    { label: 'About', icon: InfoCircledIcon, pageElement: AboutPage }, 
     { label: 'Settings', icon: GearIcon, pageElement: SettingsPage },
   ]
 
