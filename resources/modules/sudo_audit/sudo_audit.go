@@ -19,7 +19,7 @@ var fix string
 func main() {
 	// Check if the script is running with sudo privileges
 	if os.Geteuid() != 0 {
-		fmt.Println("This script must be run as root (with sudo).")
+//		fmt.Println("This script must be run as root (with sudo).")
 		return
 	}
 	checkSudoersFile("/etc/sudoers") // Check the sudoers file first
@@ -29,7 +29,7 @@ func main() {
 func checkSudoersFile(sudoersFile string) {
 	file, err := os.ReadFile(sudoersFile)
 	if err != nil {
-		fmt.Printf("Error reading %s: %s\n", sudoersFile, err)
+//		fmt.Printf("Error reading %s: %s\n", sudoersFile, err)
 		return
 	}
 
@@ -51,7 +51,7 @@ func checkSudoersFile(sudoersFile string) {
         		}
 	                fix = "Limit the permissions to only strictly neccessary."
                         output_module.PrintOutput(output_module.NewMainOut(status, message, fix, modname))
-                        fmt.Println("The user is based.")
+//                        fmt.Println("The user is based.")
                 } else if strings.Contains(line, "(ALL) ALL"){
 			user := getUserFromLine(line)
                         status = "fail"
@@ -102,7 +102,7 @@ func checkSudoersFile(sudoersFile string) {
 func checkSudoersDirectory(sudoersDir string) {
 	files, err := os.ReadDir(sudoersDir)
 	if err != nil {
-		fmt.Printf("Error reading directory %s: %s\n", sudoersDir, err)
+//		fmt.Printf("Error reading directory %s: %s\n", sudoersDir, err)
 		return
 	}
 
@@ -114,7 +114,7 @@ func checkSudoersDirectory(sudoersDir string) {
 		filePath := filepath.Join(sudoersDir, file.Name())
 		fileContent, err := os.ReadFile(filePath)
 		if err != nil {
-			fmt.Printf("Error reading file %s: %s\n", filePath, err)
+//			fmt.Printf("Error reading file %s: %s\n", filePath, err)
 			continue
 		}
 

@@ -52,7 +52,7 @@ func checkMountOptions(partition string) {
 			Finding:        fmt.Sprintf("Error reading /proc/mounts: %v", err),
 			Recommendation: "Check system permissions and integrity.",
 		})**/
-		fmt.Printf("Error reading /proc/mounts: %v", err)
+//		fmt.Printf("Error reading /proc/mounts: %v", err)
 		return
 	}
 
@@ -81,6 +81,8 @@ func checkMountOptions(partition string) {
 		})*/
 		status = "warn"
 		message = fmt.Sprintf("Parition %s not found in /proc/mounts", partition)
+		fix = "Ensure the partition is mounted if it is expected to be."
+		output_module.PrintOutput(output_module.NewMainOut(status, message, fix, modname))
 	}
 }
 
@@ -122,7 +124,7 @@ func checkFilePermissions(path string, expectedPerms os.FileMode, expectedOwner,
 			Finding:        fmt.Sprintf("Error stating file %s: %v", path, err),
 			Recommendation: "Verify the file exists and has appropriate permissions.",
 		})*/
-		fmt.Printf("Error stating file %s: %v", path, err)
+//		fmt.Printf("Error stating file %s: %v", path, err)
 		return
 	}
 
@@ -217,7 +219,7 @@ func checkPartitionExists(partition string) {
 			Finding:        fmt.Sprintf("Error reading /proc/mounts: %v", err),
 			Recommendation: "Check system permissions and integrity.",
 		})*/
-		fmt.Printf("Error reading /proc/mounts", err)
+//		fmt.Printf("Error reading /proc/mounts", err)
 		return
 	}
 
@@ -320,11 +322,14 @@ func checkUnownedFiles() {
 				status = "fail"
 				message = fmt.Sprintf("Un-owned file found: %s", line)
 				fix = "Set ownership of the file."
+				output_module.PrintOutput(output_module.NewMainOut(status, message, fix, modname))
 			}
 		}
 	} else {
 		status = "success"
 		message = "No un-owned files found."
+		fix = ""
+		output_module.PrintOutput(output_module.NewMainOut(status, message, fix, modname))
 		/*results = append(*results, CISResult{
 			BenchmarkID:    "5.2.12",
 			Status:         "pass",
@@ -388,7 +393,7 @@ func checkCoreDumps() {
 			Finding:        fmt.Sprintf("Error checking core dump status: %v", err),
 			Recommendation: "Check system permissions and integrity.",
 		})*/
-		fmt.Printf("Error checking core dump status: %v", err)
+//		fmt.Printf("Error checking core dump status: %v", err)
 		return
 	}
 
@@ -401,7 +406,7 @@ func checkCoreDumps() {
 			Finding:        fmt.Sprintf("Error reading core_pattern: %v", err),
 			Recommendation: "Check system permissions and integrity.",
 		})*/
-		fmt.Printf("Error reading core_patterns: %v, err")
+//		fmt.Printf("Error reading core_patterns: %v, err")
 		return
 	}
 
@@ -457,7 +462,7 @@ func checkServiceStatus(serviceName, benchmarkID string, shouldBeRunning bool) {
 			Finding:        fmt.Sprintf("Error checking if service %s is enabled: %v", serviceName, err),
 			Recommendation: "Check systemd service status.",
 		})*/
-		fmt.Printf("Error checking if service %s is enabled: %v", serviceName, err)
+//		fmt.Printf("Error checking if service %s is enabled: %v", serviceName, err)
 		return
 	}
 
@@ -470,7 +475,7 @@ func checkServiceStatus(serviceName, benchmarkID string, shouldBeRunning bool) {
 			Finding:        fmt.Sprintf("Error checking if service %s is active: %v", serviceName, err),
 			Recommendation: "Check systemd service status.",
 		})*/
-		fmt.Printf("Error checking if service %s is active: %v", serviceName, err)
+//		fmt.Printf("Error checking if service %s is active: %v", serviceName, err)
 		return
 	}
 
@@ -559,7 +564,7 @@ func checkLegacyService(serviceName string) {
 			Finding:        fmt.Sprintf("Legacy service %s is not installed on this system.", serviceName),
 			Recommendation: fmt.Sprintf("Ensure legacy service %s is not installed.", serviceName),
 		})*/
-		fmt.Printf("Legacy service %s is not installed on this system", serviceName)
+//		fmt.Printf("Legacy service %s is not installed on this system", serviceName)
 		return
 	}
 
@@ -572,7 +577,7 @@ func checkLegacyService(serviceName string) {
 			Finding:        fmt.Sprintf("Error checking if service %s is enabled: %v", serviceName, err),
 			Recommendation: "Check systemd service status.",
 		})*/
-		fmt.Printf("Error checking if service %s is enabled: %v", serviceName, err)
+//		fmt.Printf("Error checking if service %s is enabled: %v", serviceName, err)
 		return
 	}
 
@@ -612,7 +617,7 @@ func checkIPForwarding() {
 			Finding:        fmt.Sprintf("Error reading /proc/sys/net/ipv4/ip_forward: %v", err),
 			Recommendation: "Check system permissions and integrity.",
 		})*/
-		fmt.Printf("Error reading /proc/sys/net/ipv4/ip_forward: %v", err)
+//		fmt.Printf("Error reading /proc/sys/net/ipv4/ip_forward: %v", err)
 		return
 	}
 
@@ -655,7 +660,7 @@ func checkPacketRedirectSending() {
 			Finding:        fmt.Sprintf("Error reading /proc/sys/net/ipv4/conf/all/send_redirects: %v", err),
 			Recommendation: "Check system permissions and integrity.",
 		})*/
-		fmt.Printf("Error reading /proc/sys/net/ipv4/conf/all/send_redirects: %v", err)
+//		fmt.Printf("Error reading /proc/sys/net/ipv4/conf/all/send_redirects: %v", err)
 		return
 	}
 
@@ -752,7 +757,7 @@ func checkCryptoPreferredHashes() {
 			Finding:        fmt.Sprintf("Error checking preferred hashes using gpg: %v", err),
 			Recommendation: "Check GPG installation and configuration.",
 		})*/
-		fmt.Printf("Error checking preferred hashes using gpg: %v", err)
+//		fmt.Printf("Error checking preferred hashes using gpg: %v", err)
 		return
 	}
 
@@ -1020,7 +1025,7 @@ func checkNTPConfig() {
 			Finding:        fmt.Sprintf("Error checking NTP configuration: %v", err),
 			Recommendation: "Check NTP configuration file",
 		})*/
-		fmt.Printf("Error checking NTP configuration: %v", err)
+//		fmt.Printf("Error checking NTP configuration: %v", err)
 		return
 	}
 
@@ -1032,7 +1037,7 @@ func checkNTPConfig() {
 			Finding:        fmt.Sprintf("Error parsing number of time sources: %v", err),
 			Recommendation: "Check NTP configuration file",
 		})*/
-		fmt.Printf("Error parsing number of time sources: %v", err)
+//		fmt.Printf("Error parsing number of time sources: %v", err)
 		return
 	}
 
@@ -1077,7 +1082,7 @@ func checkNTPOption(option string, benchmarkID string) {
 				Finding:        fmt.Sprintf("Error checking NTP option '%s': %v", option, err),
 				Recommendation: "Check NTP configuration file",
 			})*/
-			fmt.Printf("Error checking NTP option '%s': %v", option, err)
+//			fmt.Printf("Error checking NTP option '%s': %v", option, err)
 		} else {
 			/*results = append(*results, CISResult{
 				BenchmarkID:    benchmarkID,
@@ -1215,13 +1220,13 @@ func checkSystemReboot() {
 			Finding:        fmt.Sprintf("Error checking if reboot is required: %v", err),
 			Recommendation: "Check system status.",
 		})*/
-		fmt.Printf("Error checking if reboot is required: %v", err)
+//		fmt.Printf("Error checking if reboot is required: %v", err)
 	}
 }
 
 func main() {
 
-	fmt.Println("--- CIS 1.1 ---") // START OF CIS1.1
+//	fmt.Println("--- CIS 1.1 ---") // START OF CIS1.1
 	checkPartitioning() // Check if /var/tmp is a separate partition
 	fstab, err := os.Open("/etc/fstab") // Check /etc/fstab for mount options and permissions
 	if err != nil {
@@ -1231,7 +1236,7 @@ func main() {
 			Finding:        fmt.Sprintf("Error opening /etc/fstab: %v", err),
 			Recommendation: "Check /etc/fstab existence and permissions.",
 		})*/
-		fmt.Printf("Error opening /etc/fstab", err)
+//		fmt.Printf("Error opening /etc/fstab", err)
 	} else {
 		defer fstab.Close()
 		scanner := bufio.NewScanner(fstab)
@@ -1268,7 +1273,7 @@ func main() {
 	checkCoreDumps() // Check for core dumps
 	checkFilePermissions("/etc/fstab", 0644, "root", "root", "1.1.21") // Check permissions
 
-	fmt.Println("--- CIS 2.1 ---") // START OF CIS2.1
+//	fmt.Println("--- CIS 2.1 ---") // START OF CIS2.1
 	checkServiceStatus("rsync", "2.1.2", false) // Check if rsync service should be disabled
 	checkServiceStatus("dhcp-client", "2.1.3", false) // Check if dhcp client should be disabled
 	checkServiceStatus("nfs", "2.1.4", false) // Check if nfs server should be disabled
@@ -1282,22 +1287,22 @@ func main() {
 	checkLegacyService("telnet") //Check if telnet server should be disabled
 	checkLegacyService("rsh") // Check if rsh server should be disabled
 
-	fmt.Println("--- CIS 3.1 ---") // START OF CIS3.1
+//	fmt.Println("--- CIS 3.1 ---") // START OF CIS3.1
 	checkIPForwarding() // Check for IP Forwarding
 	checkPacketRedirectSending() // Check for Packet Redirecting
 
-	fmt.Println("--- CIS 3.7 ---") // START OF CIS3.7
+//	fmt.Println("--- CIS 3.7 ---") // START OF CIS3.7
 	checkGPGInstalled() // Check if GPG is installed
 	checkGPGKeyConfigured() // Check if GPG is configured
 	checkCryptoPreferredHashes() // Check preferred hashes
 
-	fmt.Println("--- CIS 4.3 ---") // START OF CIS4.3
+//	fmt.Println("--- CIS 4.3 ---") // START OF CIS4.3
 	checkTimeSyncEnabled()
 	checkTimeSyncRunning()
 	checkChronyConfig()
 	checkNTPConfig()
 
-	fmt.Println("--- CIS 6.1 ---") // START OF CIS6.1
+//	fmt.Println("--- CIS 6.1 ---") // START OF CIS6.1
 	checkUpdatesInstalled()
 	checkSystemReboot()
 }
