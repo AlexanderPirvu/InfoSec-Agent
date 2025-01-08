@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Card, Flex, Grid, GridCol, Group, Image, LoadingOverlay, Skeleton, Text } from '@mantine/core'
+import { Badge, Box, Button, Card, Flex, Grid, GridCol, Group, Image, LoadingOverlay, Skeleton, Text, Title } from '@mantine/core'
 import AllNotificationChart from '@renderer/components/AllNotificationChart/AllNotificationChart'
 import { useMutation } from '@tanstack/react-query'
 import { useState, useEffect } from 'react'
@@ -28,7 +28,7 @@ const HomePage = () => {
 
   return (
     <>
-      <h1>Welcome{username ? `, ${username}` : ''}</h1>
+      <Title order={1}>Welcome{username ? `, ${username}` : ''}</Title>
       <Grid mt="xl">
         <GridCol span={6}>
           <Card shadow='lg'>

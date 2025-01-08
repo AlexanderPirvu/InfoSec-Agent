@@ -4,7 +4,7 @@ import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import * as os from "os";
 import { getModules } from "./modules/getModules";
 import { runAllModules } from "./modules/runAllModules";
-import { isWindows } from "./helpers";
+import { getAllPrograms, isWindows } from "./helpers";
 import { Module } from "./modules/interfaces/Module";
 // import { spawn } from "node:child_process";
 // import { getModuleFolders, getModuleInfo, runModules } from "./services";
@@ -131,6 +131,10 @@ app.whenReady().then(() => {
 
   ipcMain.handle("runAllModules", async () => {
     return await runAllModules(ipcRenderer)
+  })
+
+  ipcMain.handle("getSystemPrograms", async () => {
+    return await getAllPrograms()
   })
 
   createWindow();

@@ -14,6 +14,8 @@ import SettingsPage from "./pages/SettingsPage"
 import { NotificationProvider } from "./contexts/NotificationContext"
 import NotificationDrawer from "./components/NotificationDrawer/NotificationDrawer"
 import { ModulesProvider } from "./contexts/ModuleContext"
+import ChecksPage from "./pages/ChecksPage"
+import ProgramsPage from "./pages/ProgramsPage"
 
 const queryClient = new QueryClient()
 
@@ -46,8 +48,8 @@ function App(): JSX.Element {
     { label: 'Security', icon: LockClosedIcon, pageElement: () => <div>Security Page</div> }, 
     { label: 'Privacy', icon: EyeOpenIcon, pageElement: () => <div>Privacy Page</div> }, 
     { label: 'Issues', icon: Crosshair2Icon, pageElement: () => <div>Issues Page</div> }, 
-    { label: 'Programs', icon: MixIcon, pageElement: () => <div>Programs Page</div> }, 
-    { label: 'Checks', icon: CheckboxIcon, pageElement: () => <div>Checks Page</div> }, 
+    { label: 'Programs', icon: MixIcon, pageElement: ProgramsPage }, 
+    { label: 'Checks', icon: CheckboxIcon, pageElement: ChecksPage }, 
     { label: 'Integration', icon: Link2Icon, pageElement: () => <div>Integration Page</div> }, 
     { label: 'About', icon: InfoCircledIcon, pageElement: () => <div>About Page</div> }, 
     { label: 'Settings', icon: GearIcon, pageElement: SettingsPage },
