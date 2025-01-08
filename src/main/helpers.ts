@@ -103,7 +103,8 @@ export function isOSCompatible(input: string[]): boolean {
  * @author Created by Alexander Pirvu on 20-Dec-2024
  */
 export function getJsonFilter(input: string): JSON[] {
-    const jsonRegex = /{.*}/s
+    // const jsonRegex = /{.*}/s
+    const jsonRegex = /\{\s*"[^"]*":\s*"[^"]*"(?:,\s*"[^"]*":\s*"[^"]*")*\s*\}/
     const matches = input.match(jsonRegex)
     console.log(`Matches: ${matches}`)
     if (matches) {
