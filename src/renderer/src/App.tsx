@@ -6,7 +6,7 @@ import InfoSecAgentLogo from "./assets/InfoSec-Agent-logo.png"
 
 import '@mantine/core/styles.css'
 import '@mantine/charts/styles.css'
-import { AppShell, Box, Center, Grid, GridCol, Image, MantineColorsTuple, MantineProvider, NavLink, Title } from "@mantine/core"
+import { AppShell, Box, Center, Grid, GridCol, Image, MantineColorsTuple, MantineProvider, NavLink, Title, Transition } from "@mantine/core"
 import { CheckboxIcon, Crosshair2Icon, EyeOpenIcon, GearIcon, HomeIcon, InfoCircledIcon, Link2Icon, LockClosedIcon, MixIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
 import HomePage from "./pages/HomePage"
@@ -43,6 +43,8 @@ const mantineTheme = {
 function App(): JSX.Element {
   // const ipcHandle = (): void => window.Electron.ipcRenderer.send("ping");
 
+  const [open, setOpen] = useState(false)
+
   const [currentpage, setCurrentPage] = useState({label: 'Home', icon: HomeIcon, pageElement: HomePage})
 
   const pages = [
@@ -58,7 +60,16 @@ function App(): JSX.Element {
   ]
 
   const navBarLinks = pages.map((page) => (
-    <NavLink key={page.label} label={page.label} leftSection={<page.icon/>} active={currentpage.label === page.label} onClick={() => setCurrentPage(page)}/>
+    <NavLink 
+      key={page.label} 
+      label={page.label} 
+      leftSection={<page.icon/>} 
+      active={currentpage.label === page.label} 
+      onClick={() => {
+        setOpen(false)
+        setCurrentPage(page)
+        setTimeout(() => setOpen(true), 100)
+      }}/>
   ))
 
   return (
@@ -99,7 +110,9 @@ function App(): JSX.Element {
             </AppShell.Navbar>
             <AppShell.Main>
               <Section p='1'>
-                {<currentpage.pageElement />}
+                <Transition mounted={open} transition="fade-up" duration={300}>
+                {(styles) => <div style={styles}><currentpage.pageElement /></div>}
+                </Transition>
               </Section>
             </AppShell.Main>
         </AppShell>
